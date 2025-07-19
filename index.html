@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Toilet Replacement Scope</title>
+  <title>Scope of Work: Slab Leak Repair</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -67,7 +67,7 @@
 </head>
 <body>
   <div class="card">
-    <h2>Scope of Work: Toilet Replacement</h2>
+    <h2>Scope of Work: Slab Leak Repair</h2>
 
     <label for="technician">Technician Name:</label>
     <input type="text" id="technician" name="technician" placeholder="Enter technician name" />
@@ -76,54 +76,55 @@
     <input type="text" id="address" name="address" placeholder="Enter job address" />
 
     <div class="checkbox-group">
-      <label><input type="checkbox" value="Shut off water supply to existing toilet and drain the tank and bowl."> Shut off water supply to existing toilet and drain the tank and bowl.</label>
-      <label><input type="checkbox" value="Disconnect water supply line and remove the existing toilet, including tank and bowl assembly."> Disconnect water supply line and remove the existing toilet, including tank and bowl assembly.</label>
-      <label><input type="checkbox" value="Inspect existing toilet flange for damage or wear."> Inspect existing toilet flange for damage or wear...</label>
-      <label><input type="checkbox" value="Clean and prepare the flange area; remove old wax ring and debris."> Clean and prepare the flange area; remove old wax ring and debris.</label>
-      <label><input type="checkbox" value="Install new wax ring or suitable seal."> Install new wax ring or suitable seal.</label>
-      <label><input type="checkbox" value="Set new toilet in place, ensuring level and secure fit to flange."> Set new toilet in place, ensuring level and secure fit to flange.</label>
-      <label><input type="checkbox" value="Bolt toilet to floor using new closet bolts and caps."> Bolt toilet to floor using new closet bolts and caps.</label>
-      <label><input type="checkbox" value="Connect new water supply line to fill valve."> Connect new water supply line to fill valve.</label>
-      <label><input type="checkbox" value="Turn on water supply and test for leaks."> Turn on water supply and test for leaks.</label>
-      <label><input type="checkbox" value="Verify proper fill and flush operation."> Verify proper fill and flush operation.</label>
-      <label><input type="checkbox" value="Caulk base of toilet (optional)."> Caulk base of toilet (optional).</label>
-      <label><input type="checkbox" value="Dispose of old toilet and related debris."> Dispose of old toilet and related debris.</label>
+      <label><input type="checkbox" value="Confirm location of slab leak..."> Confirm location of slab leak through prior electronic leak detection or testing; verify hot/cold line and depth of leak under concrete.</label>
+      <label><input type="checkbox" value="Isolate affected line..."> Isolate affected line and shut off water supply to prevent further leakage and property damage.</label>
+      <label><input type="checkbox" value="Prepare work area..."> Prepare work area by protecting surrounding surfaces and marking slab cut location.</label>
+      <label><input type="checkbox" value="Use concrete saw..."> Use concrete saw to open slab at identified leak site; remove and safely store concrete pieces for possible reuse or disposal.</label>
+      <label><input type="checkbox" value="Excavate soil..."> Excavate soil beneath slab to expose damaged pipe section.</label>
+      <label><input type="checkbox" value="Cut out and remove failed section..."> Cut out and remove failed section of copper, PEX, or CPVC piping; install new segment with code-approved fittings and connections.</label>
+      <label><input type="checkbox" value="Pressure test repaired section..."> Pressure test repaired section for leaks prior to backfill.</label>
+      <label><input type="checkbox" value="Backfill and patch..."> Backfill excavation with compacted sand or gravel; patch concrete with non-shrink mix to prepare surface for flooring restoration by others.</label>
+      <label><input type="checkbox" value="Restore water and test..."> Restore water supply and test full line function for pressure and flow.</label>
+      <label><input type="checkbox" value="Clean up site..."> Clean up job site and remove debris related to repair.</label>
     </div>
 
     <div class="note-box">
       <strong>Exclusions:</strong><br />
-      - Drywall or flooring repair, if access or flange damage is discovered.<br />
-      - Flange or subfloor repair not included unless specifically noted.
+      - Flooring restoration (tile, hardwood, carpet, etc.)<br />
+      - Extensive rerouting or repiping unless specified<br />
+      - Leak detection not included in this scope; must be performed prior to repair.
     </div>
 
     <label for="notes">Notes for Office / Chris:</label>
     <textarea id="notes" rows="4" placeholder="Add technician notes here..."></textarea>
 
-    <button class="btn" onclick="submitToSheets()">Submit to Office</button>
+    <button class="btn" id="submitBtn">Submit to Office</button>
   </div>
 
   <script>
-    async function submitToSheets() {
+    document.getElementById('submitBtn').addEventListener('click', async () => {
       const technician = document.getElementById('technician').value;
       const address = document.getElementById('address').value;
       const notes = document.getElementById('notes').value;
       const tasks = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => cb.value);
 
-      await fetch("https://script.google.com/a/macros/a-1apsvc.com/s/AKfycbwfjLbKsxYv-3FzwXZy4UCe7z_DitvxzbY7eiIqSKr9qO52IfbypK_N8fgv8yerhve1-A/exec", {
-        method: "POST",
-        body: JSON.stringify({
-          technician,
-          address,
-          notes,
-          tasks
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+      try {
+        const response = await fetch("https://script.google.com/a/macros/a-1apsvc.com/s/AKfycbwfjLbKsxYv-3FzwXZy4UCe7z_DitvxzbY7eiIqSKr9qO52IfbypK_N8fgv8yerhve1-A/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ technician, address, notes, tasks })
+        });
 
-      alert("Submitted to Office!");
-    }
+        if (response.ok) {
+          alert("Submitted to Office!");
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error submitting form. See console for details.");
+      }
+    });
   </script>
 </body>
 </html>
