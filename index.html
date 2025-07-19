@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toilet Replacement Scope</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px;
+    }
+    h2 {
+      color: #003366;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: bold;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .checkbox-group {
+      margin-top: 1rem;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .checkbox-group input {
+      margin-right: 0.5rem;
+    }
+    .note-box {
+      background-color: #f0f4f8;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #007bff;
+    }
+    .btn {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Scope of Work: Toilet Replacement</h2>
+
+    <label for="technician">Technician Name:</label>
+    <input type="text" id="technician" name="technician" placeholder="Enter technician name" />
+
+    <label for="address">Job Address:</label>
+    <input type="text" id="address" name="address" placeholder="Enter job address" />
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" value="Shut off water supply to existing toilet and drain the tank and bowl."> Shut off water supply to existing toilet and drain the tank and bowl.</label>
+      <label><input type="checkbox" value="Disconnect water supply line and remove the existing toilet, including tank and bowl assembly."> Disconnect water supply line and remove the existing toilet, including tank and bowl assembly.</label>
+      <label><input type="checkbox" value="Inspect existing toilet flange for damage or wear."> Inspect existing toilet flange for damage or wear...</label>
+      <label><input type="checkbox" value="Clean and prepare the flange area; remove old wax ring and debris."> Clean and prepare the flange area; remove old wax ring and debris.</label>
+      <label><input type="checkbox" value="Install new wax ring or suitable seal."> Install new wax ring or suitable seal.</label>
+      <label><input type="checkbox" value="Set new toilet in place, ensuring level and secure fit to flange."> Set new toilet in place, ensuring level and secure fit to flange.</label>
+      <label><input type="checkbox" value="Bolt toilet to floor using new closet bolts and caps."> Bolt toilet to floor using new closet bolts and caps.</label>
+      <label><input type="checkbox" value="Connect new water supply line to fill valve."> Connect new water supply line to fill valve.</label>
+      <label><input type="checkbox" value="Turn on water supply and test for leaks."> Turn on water supply and test for leaks.</label>
+      <label><input type="checkbox" value="Verify proper fill and flush operation."> Verify proper fill and flush operation.</label>
+      <label><input type="checkbox" value="Caulk base of toilet (optional)."> Caulk base of toilet (optional).</label>
+      <label><input type="checkbox" value="Dispose of old toilet and related debris."> Dispose of old toilet and related debris.</label>
+    </div>
+
+    <div class="note-box">
+      <strong>Exclusions:</strong><br />
+      - Drywall or flooring repair, if access or flange damage is discovered.<br />
+      - Flange or subfloor repair not included unless specifically noted.
+    </div>
+
+    <label for="notes">Notes for Office / Chris:</label>
+    <textarea id="notes" rows="4" placeholder="Add technician notes here..."></textarea>
+
+    <button class="btn" onclick="submitToSheets()">Submit to Office</button>
+  </div>
+
+  <script>
+    async function submitToSheets() {
+      const technician = document.getElementById('technician').value;
+      const address = document.getElementById('address').value;
+      const notes = document.getElementById('notes').value;
+      const tasks = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => cb.value);
+
+      await fetch("https://script.google.com/a/macros/a-1apsvc.com/s/AKfycbwfjLbKsxYv-3FzwXZy4UCe7z_DitvxzbY7eiIqSKr9qO52IfbypK_N8fgv8yerhve1-A/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          technician,
+          address,
+          notes,
+          tasks
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      alert("Submitted to Office!");
+    }
+  </script>
+</body>
+</html>
